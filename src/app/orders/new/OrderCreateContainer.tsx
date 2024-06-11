@@ -1,6 +1,6 @@
 "use client";
 import { db } from "@/lib/firebase/client";
-import { Customer, CustomerWithQuantity } from "@/utils/customer.type";
+import { Customer } from "@/utils/customer.type";
 import {
   collection,
   doc,
@@ -17,18 +17,11 @@ import { addDays, differenceInCalendarDays, format, subDays } from "date-fns";
 import { Button } from "@/components/ui/button";
 import CustomerEditModal from "@/app/customers/CustomerEditModal";
 
-type Product = {
-  productName: string;
-  productCode: string;
-  size: string;
-  price: number;
-  quantity: number;
-};
-
 export default function OrderCreateContainer() {
-  const [customer, setCustomer] = useState<CustomerWithQuantity>();
+  const [customer, setCustomer] = useState<Customer>();
   const [customers, setCustomers] = useState<Customer[]>([]);
   const customerId = useStore((state) => state.customerId);
+  const setCustomerId = useStore((state) => state.setCustomerId);
 
   const startDate = useStore((state) => state.startDate);
   const setStartDate = useStore((state) => state.setStartDate);
@@ -52,41 +45,32 @@ export default function OrderCreateContainer() {
         console.log(e);
       },
     });
-    return () => unsub();
-  }, []);
+    return () => {
+      unsub();
+      setCustomerId("");
+    };
+  }, [setCustomerId]);
 
   useEffect(() => {
     if (!customerId) return;
-    const customerDoc = doc(db, "customers", customerId);
-    const unsub = onSnapshot(customerDoc, {
-      next: (snapshot) => {
-        const products = snapshot
-          .data()
-          ?.products.map((product: Product) => ({ ...product, quantity: 0 }));
-        setCustomer({
-          id: snapshot.id,
-          ...snapshot.data(),
-          products,
-        } as CustomerWithQuantity);
-      },
-    });
-    return () => unsub();
-  }, [customerId]);
+    const findCustomer = customers.find(customer => customer.id === customerId);
+    setCustomer({ ...findCustomer, id: customerId } as Customer);
+  }, [customerId, customers]);
 
   useEffect(() => {
     if (!customer) return;
-    let weeks = [];
-    const term = differenceInCalendarDays(
+    let terms = [];
+    const differences = differenceInCalendarDays(
       new Date(endDate),
       new Date(startDate)
     );
-    for (let i = 1; i <= term + 1; i++) {
+    for (let i = 1; i <= differences + 1; i++) {
       const day = addDays(new Date(subDays(startDate, 1)), i);
-      weeks.push(format(new Date(day), "yyyy-MM-dd"));
+      terms.push(format(new Date(day), "yyyy-MM-dd"));
     }
-    const newWeeks = weeks.filter((week) => {
-      const day = new Date(week).getDay();
-      const result = customer?.excludedDays.includes(day);
+    const newWeeks = terms.filter((term) => {
+      const day = new Date(term).getDay();
+      const result = customer?.excludedDays?.includes(day);
       return result;
     });
     setTerms(newWeeks);
@@ -101,7 +85,11 @@ export default function OrderCreateContainer() {
       <div className="flex gap-3 mb-6">
         <OrderCustomerSelect customers={customers} />
         {customer && (
-          <CustomerEditModal customer={customer} customerId={customerId} />
+          <CustomerEditModal
+            key={customer.id}
+            customer={customer}
+            customerId={customerId}
+          />
         )}
         <OrderCustomerTermInput date={startDate} setDate={setStartDate} />
         <OrderCustomerTermInput date={endDate} setDate={setEndDate} />

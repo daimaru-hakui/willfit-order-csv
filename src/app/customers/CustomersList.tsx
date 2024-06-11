@@ -33,7 +33,7 @@ export default function CustomersList() {
       },
     });
     return () => unsub();
-  }, []);
+  }, [setCustomers]);
 
   if (!customers) {
     return <div></div>;
@@ -51,7 +51,7 @@ export default function CustomersList() {
       </TableHeader>
       <TableBody>
         {customers.map((customer) => (
-          <TableRow key={customer.createdAt}>
+          <TableRow key={customer.id}>
             <TableCell className="font-medium">
               {customer.customerCode}
             </TableCell>
@@ -62,6 +62,7 @@ export default function CustomersList() {
             <TableCell className="text-right">
               <div className="flex items-center gap-3">
                 <CustomerEditModal
+                  key={customer.id}
                   customer={customer}
                   customerId={customer.id}
                 />

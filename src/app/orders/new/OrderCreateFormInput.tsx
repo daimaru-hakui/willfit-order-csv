@@ -1,6 +1,6 @@
 import { CreateOrder } from "@/utils/order.type";
 import React, { useEffect, useRef } from "react";
-import { FieldValues, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 type Props = {
   form: UseFormReturn<CreateOrder, any, undefined>;
@@ -19,7 +19,6 @@ type Props = {
 export default function OrderCreateFormInput({
   form,
   product,
-  orderDate,
   index,
   idx,
 }: Props) {

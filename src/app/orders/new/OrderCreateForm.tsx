@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import { CustomerWithQuantity } from "@/utils/customer.type";
 import { format } from "date-fns";
 
 import React, { useEffect } from "react";
@@ -13,9 +12,10 @@ import { CreateOrder, CreateOrderSchema } from "@/utils/order.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
+import { Customer } from "@/utils/customer.type";
 
 type Props = {
-  customer?: CustomerWithQuantity;
+  customer?: Customer | null;
   terms: string[];
 };
 

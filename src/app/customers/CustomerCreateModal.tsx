@@ -31,9 +31,11 @@ export function CustomerCreateModal() {
       excludedDays: [],
       products: [
         {
+          productCode: "",
           productName: "",
           size: "",
           price: 0,
+          quantity: 0
         },
       ],
     },
@@ -46,10 +48,11 @@ export function CustomerCreateModal() {
 
   const addProduct = () => {
     append({
-      productCode:"",
+      productCode: "",
       productName: "",
       size: "",
       price: 0,
+      quantity: 0
     });
   };
 
@@ -107,6 +110,11 @@ export function CustomerCreateModal() {
                 {fields.map((item, idx) => (
                   <div key={item.id} className="flex gap-3 items-end">
                     <div>
+                      <Input
+                        type="hidden"
+                        defaultValue={0}
+                        {...form.register(`products.${idx}.quantity`, { valueAsNumber: true })}
+                      />
                       {idx === 0 && (
                         <Label className="pb-3 block">品番</Label>
                       )}
