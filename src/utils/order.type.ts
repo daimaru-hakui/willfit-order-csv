@@ -1,10 +1,26 @@
 import { z } from "zod";
 
+export type Order = {
+  id: string;
+  customerCode: string;
+  customerName: string;
+  terms: {
+    orderDate: string;
+    details: {
+      productCode: string;
+      productName: string;
+      size: string;
+      price: number;
+      quantity: number;
+    }[];
+  }[];
+  createdAt: Date;
+};
+
 export const CreateOrderSchema = z.object({
-  id: z.string(),
   customerCode: z.string(),
   customerName: z.string(),
-  cart: z
+  terms: z
     .object({
       orderDate: z.string(),
       details: z

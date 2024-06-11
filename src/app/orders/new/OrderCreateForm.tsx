@@ -11,6 +11,8 @@ import OrderCreateFormInput from "./OrderCreateFormInput";
 import { useStore } from "@/lib/store";
 import { CreateOrder, CreateOrderSchema } from "@/utils/order.type";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase/client";
 
 type Props = {
   customer?: CustomerWithQuantity;
@@ -24,15 +26,22 @@ export default function OrderCreateForm({ customer, terms }: Props) {
     resolver: zodResolver(CreateOrderSchema),
   });
 
-  const onSubmit = (data: CreateOrder) => {
+  const onSubmit = async (data: CreateOrder) => {
     console.log(data);
+    await handleCreateOrder(data);
   };
 
   const errorInvalid = (e: any) => {
     console.log("error", e);
   };
 
-  const handleCreateOrder = () => {};
+  const handleCreateOrder = async (data: CreateOrder) => {
+    const ordersRef = collection(db, "orders");
+    await addDoc(ordersRef, {
+      ...data,
+      createdAt: serverTimestamp(),
+    });
+  };
 
   const reset = () => {
     form.reset();
@@ -54,11 +63,6 @@ export default function OrderCreateForm({ customer, terms }: Props) {
           onSubmit={form.handleSubmit(onSubmit, errorInvalid)}
           className="w-full"
         >
-          <input
-            type="hidden"
-            defaultValue={customer.id}
-            {...form.register(`id`)}
-          />
           <input
             type="hidden"
             defaultValue={customer.customerCode}
@@ -99,7 +103,7 @@ export default function OrderCreateForm({ customer, terms }: Props) {
                     <input
                       type="hidden"
                       defaultValue={day}
-                      {...form.register(`cart.${index}.orderDate`)}
+                      {...form.register(`terms.${index}.orderDate`)}
                     />
                     <div
                       className={cn(

@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import OrderCreateForm from "./OrderCreateForm";
 import OrderCustomerSelect from "./OrderCustomerSelect";
 import { useStore } from "@/lib/store";
-import OrderTerm from "./OrderTerm";
+import OrderCustomerTermInput from "./OrderCustomerTermInput";
 import { addDays, differenceInCalendarDays, format, subDays } from "date-fns";
 import { Button } from "@/components/ui/button";
 import CustomerEditModal from "@/app/customers/CustomerEditModal";
@@ -103,8 +103,8 @@ export default function OrderCreateContainer() {
         {customer && (
           <CustomerEditModal customer={customer} customerId={customerId} />
         )}
-        <OrderTerm date={startDate} setDate={setStartDate} />
-        <OrderTerm date={endDate} setDate={setEndDate} />
+        <OrderCustomerTermInput date={startDate} setDate={setStartDate} />
+        <OrderCustomerTermInput date={endDate} setDate={setEndDate} />
         <Button onClick={reset}>期間リセット</Button>
       </div>
       <OrderCreateForm customer={customer} terms={terms} />

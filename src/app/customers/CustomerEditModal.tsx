@@ -84,7 +84,7 @@ export default function CustomerEditModal({ customer, customerId }: Props) {
       <DialogTrigger asChild>
         <Button variant="outline">編集</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
@@ -109,9 +109,19 @@ export default function CustomerEditModal({ customer, customerId }: Props) {
                   defaultValue={customer.excludedDays}
                 />
               </div>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 mt-3">
                 {fields.map((item, idx) => (
                   <div key={item.id} className="flex gap-3 items-end">
+                    <div>
+                      {idx === 0 && (
+                        <Label className="pb-3 block">品番</Label>
+                      )}
+                      <Input
+                        type="text"
+                        autoComplete="off"
+                        {...form.register(`products.${idx}.productCode`)}
+                      />
+                    </div>
                     <div>
                       {idx === 0 && (
                         <Label className="pb-3 block">商品名</Label>
@@ -139,8 +149,8 @@ export default function CustomerEditModal({ customer, customerId }: Props) {
                       />
                     </div>
                     <RiDeleteBinLine
-                      size={26}
-                      className="mb-1.5 cursor-pointer"
+                      size={32}
+                      className="mb-1 cursor-pointer"
                       onClick={() => deleteProduct(idx)}
                     />
                   </div>

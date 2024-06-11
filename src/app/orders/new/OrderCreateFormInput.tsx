@@ -30,7 +30,7 @@ export default function OrderCreateFormInput({
   };
 
   useEffect(() => {
-    form.setValue(`cart.${index}.details.${idx}.quantity`, 0);
+    form.setValue(`terms.${index}.details.${idx}.quantity`, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -39,22 +39,22 @@ export default function OrderCreateFormInput({
       <input
         type="hidden"
         defaultValue={product.productCode}
-        {...form.register(`cart.${index}.details.${idx}.productCode`)}
+        {...form.register(`terms.${index}.details.${idx}.productCode`)}
       />
       <input
         type="hidden"
         defaultValue={product.productName}
-        {...form.register(`cart.${index}.details.${idx}.productName`)}
+        {...form.register(`terms.${index}.details.${idx}.productName`)}
       />
       <input
         type="hidden"
         defaultValue={product.size}
-        {...form.register(`cart.${index}.details.${idx}.size`)}
+        {...form.register(`terms.${index}.details.${idx}.size`)}
       />
       <input
         type="hidden"
         defaultValue={Number(product.price)}
-        {...form.register(`cart.${index}.details.${idx}.price`, {
+        {...form.register(`terms.${index}.details.${idx}.price`, {
           valueAsNumber: true,
         })}
       />
@@ -63,13 +63,13 @@ export default function OrderCreateFormInput({
         type="number"
         defaultValue={product.quantity}
         className="w-[75px] h-[40px] mt-2 block p-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
-        {...form.register(`cart.${index}.details.${idx}.quantity`, {
+        {...form.register(`terms.${index}.details.${idx}.quantity`, {
           valueAsNumber: true,
         })}
         ref={ref}
         onChange={(e) =>
           form.setValue(
-            `cart.${index}.details.${idx}.quantity`,
+            `terms.${index}.details.${idx}.quantity`,
             +e.target.value
           )
         }
