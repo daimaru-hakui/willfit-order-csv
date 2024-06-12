@@ -1,8 +1,31 @@
+'use client';
 import React, { useState } from "react";
 import MenuTitle from "./MenuTitle";
 import MenuList from "./MenuList";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/lib/firebase/client";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+      if (pathname === '/auth/login') {
+        router.push('/');
+      }
+    } else {
+      console.log("未ログイン");
+      router.push('/auth/login');
+    }
+  });
+
+  if (pathname === '/auth/login') return (
+    <div></div>
+  );
+
   return (
     <nav className="bg-muted flex justify-between items-center sticky top-0 p-3">
       <header className="flex items-center">

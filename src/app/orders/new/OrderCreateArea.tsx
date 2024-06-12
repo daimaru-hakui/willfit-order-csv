@@ -3,7 +3,6 @@ import OrderCreateForm from "./OrderCreateForm";
 import { Customer } from "@/utils/customer.type";
 import { addDays, differenceInCalendarDays, format, subDays } from "date-fns";
 import { useStore } from "@/lib/store";
-import { useRouter } from "next/navigation";
 
 type Props = {
   customer: Customer;
@@ -14,13 +13,8 @@ type Props = {
 export default function OrderCreateArea({ customer, terms, setTerms }: Props) {
   const [defaultValues, setDefaultValues] = useState<Customer>();
   const startDate = useStore((state) => state.startDate);
-  const setStartDate = useStore((state) => state.setStartDate);
   const endDate = useStore((state) => state.endDate);
-  const setEndDate = useStore((state) => state.setEndDate);
-  const resetDate = useStore((state) => state.resetDate);
-
   const customerId = useStore((state) => state.customerId);
-  const router = useRouter()
 
   useEffect(() => {
     if (!customer) return;
@@ -39,8 +33,7 @@ export default function OrderCreateArea({ customer, terms, setTerms }: Props) {
       return result;
     });
     setTerms(newWeeks);
-    router.push(`/orders/new?customId=${customerId}}`)
-  }, [startDate, endDate, customerId, customer,setTerms]);
+  }, [startDate, endDate, customer, setTerms]);
 
   useEffect(() => {
     setDefaultValues(customer);
@@ -48,14 +41,11 @@ export default function OrderCreateArea({ customer, terms, setTerms }: Props) {
 
   if (!defaultValues) return;
 
-  console.log(defaultValues);
-
   return (
     <div>
       <OrderCreateForm
         defaultValues={defaultValues}
         terms={terms}
-        customer={defaultValues}
       />
     </div>
   );

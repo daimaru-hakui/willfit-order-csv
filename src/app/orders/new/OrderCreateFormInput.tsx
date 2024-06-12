@@ -34,7 +34,7 @@ export default function OrderCreateFormInput({
   useEffect(() => {
     form.setValue(`terms.${index}.details.${idx}.quantity`, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [customer]);
 
   return (
     <div key={product.productName}>
@@ -72,10 +72,10 @@ export default function OrderCreateFormInput({
           form.setValue(
             `terms.${index}.details.${idx}.quantity`,
             +e.target.value
-            )
-            }
-        //   ref={ref}
-        // onFocus={handleFocus}
+          )
+        }
+      //   ref={ref}
+      // onFocus={handleFocus}
       />
     </div>
   );
