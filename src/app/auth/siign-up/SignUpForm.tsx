@@ -38,9 +38,9 @@ export default function SignUpForm() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="space-y-3">
-              <FormInput control={form.control} type="text" name="email" label="Email" />
-              <FormInput control={form.control} type="password" name="password" label="Password" />
-              <FormInput control={form.control} type="password" name="confirmPassword" label="Passwordの確認" />
+              <FormInput form={form} type="text" name="email" label="Email" />
+              <FormInput form={form} type="password" name="password" label="Password" />
+              <FormInput form={form} type="password" name="confirmPassword" label="Passwordの確認" />
             </div>
             <SubmitRhkButton isValid={!form.formState.isValid} text="アカウント作成" className="w-full mt-5" />
             <p className="text-xs mt-3">アカウント登録済みの場合は
