@@ -18,25 +18,29 @@ import {
   Customer,
   CustomerEdit,
   CustomerEditSchema,
-  CustomerWithQuantity,
 } from "@/utils/customer.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FiPlus } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 type Props = {
-  customer: Customer | CustomerWithQuantity;
+  customer: Customer;
   customerId: string;
 };
 
 export default function CustomerEditModal({ customer, customerId }: Props) {
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+
   const form = useForm<CustomerEdit>({
     resolver: zodResolver(CustomerEditSchema),
-    defaultValues: customer,
+    defaultValues: customer
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -50,9 +54,10 @@ export default function CustomerEditModal({ customer, customerId }: Props) {
       productName: "",
       size: "",
       price: 0,
+      quantity: 0
     });
   };
-
+  console.log(customer);
   const deleteProduct = (idx: number) => {
     remove(idx);
   };
@@ -72,7 +77,13 @@ export default function CustomerEditModal({ customer, customerId }: Props) {
       }
     } finally {
       setLoading(false);
+      setOpen(prev => !prev);
     }
+  };
+
+  const handleOpenChange = () => {
+    setOpen(prev => !prev);
+    form.reset();
   };
 
   const onSubmit = async (data: CustomerEdit) => {
@@ -80,7 +91,7 @@ export default function CustomerEditModal({ customer, customerId }: Props) {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button variant="outline">編集</Button>
       </DialogTrigger>
@@ -106,13 +117,18 @@ export default function CustomerEditModal({ customer, customerId }: Props) {
                 />
                 <CheckboxInput
                   form={form}
-                  defaultValue={customer.excludedDays}
+                  defaultValue={customer?.excludedDays}
                 />
               </div>
               <div className="flex flex-col gap-3 mt-3">
                 {fields.map((item, idx) => (
                   <div key={item.id} className="flex gap-3 items-end">
                     <div>
+                      <Input
+                        type="hidden"
+                        defaultValue={0}
+                        {...form.register(`products.${idx}.quantity`, { valueAsNumber: true })}
+                      />
                       {idx === 0 && (
                         <Label className="pb-3 block">品番</Label>
                       )}
@@ -161,12 +177,13 @@ export default function CustomerEditModal({ customer, customerId }: Props) {
                 <div>商品追加</div>
               </Button>
             </div>
-            <div className="text-right">
+            <div className="flex gap-3">
+              <Button type='button' onClick={handleOpenChange}>閉じる</Button>
               <SubmitRhkButton text="更新" isPending={loading} />
             </div>
           </form>
         </Form>
       </DialogContent>
-    </Dialog>
+    </Dialog >
   );
-}
+};

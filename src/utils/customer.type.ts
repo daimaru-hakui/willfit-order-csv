@@ -10,22 +10,9 @@ export type Customer = {
     productName: string;
     size: string;
     price: number;
-  }[];
-  createdAt: any;
-};
-
-export type CustomerWithQuantity = {
-  id: string;
-  customerName: string;
-  customerCode: string;
-  excludedDays: number[];
-  products: {
-    productCode: string;
-    productName: string;
-    size: string;
-    price: number;
     quantity: number;
   }[];
+  createdAt: any;
 };
 
 export const CustomerCreateSchema = z.object({
@@ -38,6 +25,7 @@ export const CustomerCreateSchema = z.object({
       productName: z.string(),
       size: z.string().optional(),
       price: z.coerce.number(),
+      quantity: z.number()
     })
     .array(),
 });
@@ -53,6 +41,7 @@ export const CustomerEditSchema = z.object({
       productName: z.string(),
       size: z.string().optional(),
       price: z.coerce.number(),
+      quantity: z.number()
     })
     .array(),
 });
