@@ -1,9 +1,11 @@
+import { Customer } from "@/utils/customer.type";
 import { CreateOrder } from "@/utils/order.type";
 import React, { useEffect, useRef } from "react";
 import { UseFormReturn } from "react-hook-form";
 
 type Props = {
   form: UseFormReturn<CreateOrder, any, undefined>;
+  customer: Customer;
   product: {
     productCode: string;
     productName: string;
@@ -18,6 +20,7 @@ type Props = {
 
 export default function OrderCreateFormInput({
   form,
+  customer,
   product,
   index,
   idx,
@@ -60,19 +63,19 @@ export default function OrderCreateFormInput({
 
       <input
         type="number"
-        defaultValue={product.quantity}
+        defaultValue={0}
         className="w-[75px] h-[40px] mt-2 block p-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
         {...form.register(`terms.${index}.details.${idx}.quantity`, {
           valueAsNumber: true,
         })}
-        ref={ref}
         onChange={(e) =>
           form.setValue(
             `terms.${index}.details.${idx}.quantity`,
             +e.target.value
-          )
-        }
-        onFocus={handleFocus}
+            )
+            }
+        //   ref={ref}
+        // onFocus={handleFocus}
       />
     </div>
   );

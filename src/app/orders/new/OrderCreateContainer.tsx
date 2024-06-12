@@ -16,12 +16,15 @@ import OrderCustomerTermInput from "./OrderCustomerTermInput";
 import { addDays, differenceInCalendarDays, format, subDays } from "date-fns";
 import { Button } from "@/components/ui/button";
 import CustomerEditModal from "@/app/customers/CustomerEditModal";
+import OrderCreateArea from "./OrderCreateArea";
+import { useRouter } from "next/navigation";
 
 export default function OrderCreateContainer() {
   const [customer, setCustomer] = useState<Customer>();
   const [customers, setCustomers] = useState<Customer[]>([]);
   const customerId = useStore((state) => state.customerId);
   const setCustomerId = useStore((state) => state.setCustomerId);
+  const router = useRouter()
 
   const startDate = useStore((state) => state.startDate);
   const setStartDate = useStore((state) => state.setStartDate);
@@ -53,49 +56,32 @@ export default function OrderCreateContainer() {
 
   useEffect(() => {
     if (!customerId) return;
-    const findCustomer = customers.find(customer => customer.id === customerId);
+    const findCustomer = customers.find(
+      (customer) => customer.id === customerId
+    );
     setCustomer({ ...findCustomer, id: customerId } as Customer);
   }, [customerId, customers]);
-
-  useEffect(() => {
-    if (!customer) return;
-    let terms = [];
-    const differences = differenceInCalendarDays(
-      new Date(endDate),
-      new Date(startDate)
-    );
-    for (let i = 1; i <= differences + 1; i++) {
-      const day = addDays(new Date(subDays(startDate, 1)), i);
-      terms.push(format(new Date(day), "yyyy-MM-dd"));
-    }
-    const newWeeks = terms.filter((term) => {
-      const day = new Date(term).getDay();
-      const result = customer?.excludedDays?.includes(day);
-      return result;
-    });
-    setTerms(newWeeks);
-  }, [startDate, endDate, customerId, customer]);
 
   const reset = () => {
     resetDate();
   };
 
+
   return (
     <div className="w-full mx-auto">
       <div className="flex gap-3 mb-6">
         <OrderCustomerSelect customers={customers} />
-        {customer && (
-          <CustomerEditModal
-            key={customer.id}
-            customer={customer}
-            customerId={customerId}
-          />
-        )}
         <OrderCustomerTermInput date={startDate} setDate={setStartDate} />
         <OrderCustomerTermInput date={endDate} setDate={setEndDate} />
         <Button onClick={reset}>期間リセット</Button>
       </div>
-      <OrderCreateForm customer={customer} terms={terms} />
+      {customer && (
+        <OrderCreateArea
+          customer={customer}
+          terms={terms}
+          setTerms={setTerms}
+        />
+      )}
     </div>
   );
 }

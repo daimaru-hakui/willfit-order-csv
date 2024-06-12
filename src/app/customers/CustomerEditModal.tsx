@@ -37,7 +37,7 @@ export default function CustomerEditModal({ customer }: Props) {
       <DialogTrigger asChild>
         <Button variant="outline">編集</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] overflow-auto max-h-screen">
         <DialogHeader>
           <DialogTitle>顧客編集</DialogTitle>
         </DialogHeader>

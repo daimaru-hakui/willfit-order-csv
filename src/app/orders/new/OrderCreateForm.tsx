@@ -17,13 +17,22 @@ import { Customer } from "@/utils/customer.type";
 type Props = {
   customer?: Customer | null;
   terms: string[];
+  defaultValues: Customer;
 };
 
-export default function OrderCreateForm({ customer, terms }: Props) {
+export default function OrderCreateForm({
+  customer,
+  terms,
+  defaultValues,
+}: Props) {
   const startDate = useStore((state) => state.startDate);
   const endDate = useStore((state) => state.endDate);
   const form = useForm<CreateOrder>({
     resolver: zodResolver(CreateOrderSchema),
+    defaultValues: {
+      customerCode: defaultValues.customerCode,
+      customerName: defaultValues.customerName,
+    },
   });
 
   const onSubmit = async (data: CreateOrder) => {
@@ -36,11 +45,12 @@ export default function OrderCreateForm({ customer, terms }: Props) {
   };
 
   const handleCreateOrder = async (data: CreateOrder) => {
-    const ordersRef = collection(db, "orders");
-    await addDoc(ordersRef, {
-      ...data,
-      createdAt: serverTimestamp(),
-    });
+    console.log(data);
+    // const ordersRef = collection(db, "orders");
+    // await addDoc(ordersRef, {
+    //   ...data,
+    //   createdAt: serverTimestamp(),
+    // });
   };
 
   const reset = () => {
@@ -52,10 +62,6 @@ export default function OrderCreateForm({ customer, terms }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate]);
 
-  if (!customer) {
-    return <div></div>;
-  }
-
   return (
     <>
       <Form {...form}>
@@ -63,19 +69,11 @@ export default function OrderCreateForm({ customer, terms }: Props) {
           onSubmit={form.handleSubmit(onSubmit, errorInvalid)}
           className="w-full"
         >
-          <input
-            type="hidden"
-            defaultValue={customer.customerCode}
-            {...form.register(`customerCode`)}
-          />
-          <input
-            type="hidden"
-            defaultValue={customer.customerName}
-            {...form.register(`customerName`)}
-          />
+          <input type="hidden" {...form.register(`customerCode`)} />
+          <input type="hidden" {...form.register(`customerName`)} />
           <div className="flex">
             <div className="w-full max-w-[380px] mt-1">
-              <div className="grid grid-cols-[1fr_100px_80px] items-center h-[50px] px-2 bg-gray-100 rounded-md shadow-sm">
+              <div className="grid grid-cols-[1fr_100px_70px] items-center h-[50px] px-2 bg-gray-100 rounded-md shadow-sm">
                 <div className="text-left font-semibold min-w-[120px]">
                   商品名
                 </div>
@@ -85,7 +83,7 @@ export default function OrderCreateForm({ customer, terms }: Props) {
               {customer?.products?.map((d) => (
                 <div
                   key={d.productName}
-                  className="grid grid-cols-[1fr_100px_80px] items-center h-[40px] mt-2 px-2 bg-gray-100 rounded-md"
+                  className="grid grid-cols-[1fr_100px_70px] items-center h-[40px] mt-2 px-2 bg-gray-100 rounded-md"
                 >
                   <div className="min-w-[120px]">{d.productName}</div>
                   <div className="px-1">{d.size}</div>
@@ -119,6 +117,7 @@ export default function OrderCreateForm({ customer, terms }: Props) {
                     </div>
                     {customer?.products.map((product, idx) => (
                       <OrderCreateFormInput
+                        customer={customer}
                         key={product.productName}
                         form={form}
                         product={product}

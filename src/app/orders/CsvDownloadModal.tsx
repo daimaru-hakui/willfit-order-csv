@@ -44,7 +44,7 @@ export default function CsvDownloadModal({ order }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">CSV download</Button>
+        <Button variant="outline">CSV</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

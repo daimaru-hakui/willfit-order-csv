@@ -13,6 +13,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import CustomerEditModal from "./CustomerEditModal";
+import Loading from "./loading";
 
 export default function CustomersList() {
   const [customers, setCustomers] = useState<Customer[]>();
@@ -36,7 +37,7 @@ export default function CustomersList() {
   }, [setCustomers]);
 
   if (!customers) {
-    return <div></div>;
+    return <Loading />;
   }
 
   return (

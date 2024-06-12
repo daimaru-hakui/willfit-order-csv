@@ -14,7 +14,8 @@ export type Order = {
       quantity: number;
     }[];
   }[];
-  createdAt: Date;
+  createdAt: Date | any;
+  updatedAt: Date | any;
 };
 
 export const CreateOrderSchema = z.object({

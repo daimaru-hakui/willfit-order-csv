@@ -80,13 +80,13 @@ export default function CustomerEditForm({ customer, defaultValues }: Props) {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-1 items-center gap-4">
             <FormInput
-              control={form.control}
+              form={form}
               name="customerCode"
               type="text"
               label="顧客コード"
             />
             <FormInput
-              control={form.control}
+              form={form}
               name="customerName"
               type="text"
               label="顧客名"

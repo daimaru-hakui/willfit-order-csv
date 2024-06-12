@@ -84,7 +84,7 @@ export function CustomerCreateModal() {
       <DialogTrigger asChild>
         <Button variant="outline">追加</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] overflow-auto max-h-screen">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
@@ -93,13 +93,13 @@ export function CustomerCreateModal() {
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-1 items-center gap-4">
                 <FormInput
-                  control={form.control}
+                  form={form}
                   name="customerCode"
                   type="text"
                   label="顧客コード"
                 />
                 <FormInput
-                  control={form.control}
+                  form={form}
                   name="customerName"
                   type="text"
                   label="顧客名"
