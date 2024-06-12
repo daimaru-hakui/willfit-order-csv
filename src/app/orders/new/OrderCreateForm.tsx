@@ -15,13 +15,11 @@ import { db } from "@/lib/firebase/client";
 import { Customer } from "@/utils/customer.type";
 
 type Props = {
-  customer?: Customer | null;
   terms: string[];
   defaultValues: Customer;
 };
 
 export default function OrderCreateForm({
-  customer,
   terms,
   defaultValues,
 }: Props) {
@@ -33,6 +31,11 @@ export default function OrderCreateForm({
       customerCode: defaultValues.customerCode,
       customerName: defaultValues.customerName,
     },
+    values: {
+      customerCode: defaultValues.customerCode,
+      customerName: defaultValues.customerName,
+      terms: []
+    }
   });
 
   const onSubmit = async (data: CreateOrder) => {
@@ -46,11 +49,13 @@ export default function OrderCreateForm({
 
   const handleCreateOrder = async (data: CreateOrder) => {
     console.log(data);
-    // const ordersRef = collection(db, "orders");
-    // await addDoc(ordersRef, {
-    //   ...data,
-    //   createdAt: serverTimestamp(),
-    // });
+    const result = confirm("登録して宜しいでしょうか");
+    if (!result) return;
+    const ordersRef = collection(db, "orders");
+    await addDoc(ordersRef, {
+      ...data,
+      createdAt: serverTimestamp(),
+    });
   };
 
   const reset = () => {
@@ -60,7 +65,7 @@ export default function OrderCreateForm({
   useEffect(() => {
     form.reset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startDate, endDate]);
+  }, [startDate, endDate, defaultValues]);
 
   return (
     <>
@@ -80,7 +85,7 @@ export default function OrderCreateForm({
                 <div className="text-left font-semibold">サイズ</div>
                 <div className="text-left font-semibold">価格</div>
               </div>
-              {customer?.products?.map((d) => (
+              {defaultValues?.products?.map((d) => (
                 <div
                   key={d.productName}
                   className="grid grid-cols-[1fr_100px_70px] items-center h-[40px] mt-2 px-2 bg-gray-100 rounded-md"
@@ -115,9 +120,9 @@ export default function OrderCreateForm({
                       <div>{format(new Date(day), "d日")}</div>
                       <div>{format(new Date(day), "EEE")}</div>
                     </div>
-                    {customer?.products.map((product, idx) => (
+                    {defaultValues?.products.map((product, idx) => (
                       <OrderCreateFormInput
-                        customer={customer}
+                        customer={defaultValues}
                         key={product.productName}
                         form={form}
                         product={product}
