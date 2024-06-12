@@ -16,7 +16,6 @@ export default function CheckboxInput({ form, defaultValue }: Props) {
 
   useEffect(() => {
     form.setValue("excludedDays", [...array]);
-    console.log(array)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [array]);
 

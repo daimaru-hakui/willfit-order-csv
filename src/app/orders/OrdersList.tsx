@@ -13,7 +13,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { BsFiletypeCsv } from "react-icons/bs";
-
+import CsvDownloadModal from "./CsvDownloadModal";
 
 export default function OrdersList() {
   const [orders, setOrders] = useState<Order[]>();
@@ -39,11 +39,11 @@ export default function OrdersList() {
   }
 
   return (
-    <Table className="mt-3">
+    <Table className="mt-3 w-[850px]">
       <TableHeader>
         <TableRow>
           <TableHead className="w-[150px]">顧客コード</TableHead>
-          <TableHead className="w-[250px]">顧客名</TableHead>
+          <TableHead className="w-[200px]">顧客名</TableHead>
           <TableHead className="w-[400px]">期間</TableHead>
           <TableHead className="w-[100px]">actions</TableHead>
         </TableRow>
@@ -58,7 +58,7 @@ export default function OrdersList() {
             </TableCell>
             <TableCell className="text-right">
               <div className="flex items-center gap-3">
-                <BsFiletypeCsv size={22} className="cursor-pointer" />
+                <CsvDownloadModal order={order}/>
                 <RiDeleteBin6Line
                   size={24}
                   color="red"

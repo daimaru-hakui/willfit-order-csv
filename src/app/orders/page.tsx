@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function OrdersPage() {
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-[600px] mt-6">
+    <div className="flex flex-col justify-center items-center w-full max-w-[900px] mt-6">
       <div className="w-full flex justify-between items-center">
         <h2 className="font-bold text-xl">CSVリスト</h2>
         <Button variant="outline" asChild>
