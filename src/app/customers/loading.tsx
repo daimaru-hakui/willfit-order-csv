@@ -1,6 +1,5 @@
 import React from 'react'
 import { RiLoader2Fill } from 'react-icons/ri'
-// import { Loader2 } from "lucide-react"
 
 export default function Loading() {
   return (

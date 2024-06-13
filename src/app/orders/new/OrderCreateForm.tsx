@@ -74,24 +74,30 @@ export default function OrderCreateForm({ terms, defaultValues }: Props) {
           <input type="hidden" {...form.register(`customerCode`)} />
           <input type="hidden" {...form.register(`customerName`)} />
           <div className="flex">
-            <div className="w-full max-w-[380px] mt-1">
-              <div className="grid grid-cols-[1fr_100px_70px] items-center h-[50px] px-2 bg-gray-100 rounded-md shadow-sm">
+            <div className="w-full max-w-[500px] mt-1">
+              <div className="grid grid-cols-[1fr_100px_70px_70px_70px] items-center h-[50px] px-2 bg-gray-100 rounded-md shadow-sm">
                 <div className="text-left font-semibold min-w-[120px]">
                   商品名
                 </div>
                 <div className="text-left font-semibold">サイズ</div>
-                <div className="text-left font-semibold">価格</div>
+                <div className="text-left font-semibold">売価</div>
+                <div className="text-left font-semibold">原価</div>
+                <div className="text-left font-semibold">合計</div>
               </div>
-              {defaultValues?.products?.map((d) => (
+              {defaultValues?.products?.map((d,index) => (
                 <div
                   key={d.productName}
-                  className="grid grid-cols-[1fr_100px_70px] items-center h-[40px] mt-2 px-2 bg-gray-100 rounded-md"
+                  className="grid grid-cols-[1fr_100px_70px_70px_70px] items-center h-[40px] mt-2 px-2 bg-gray-100 rounded-md"
                 >
                   <div className="min-w-[120px]">{d.productName}</div>
                   <div className="px-1">{d.size}</div>
                   <div className="px-1 text-right">
-                    {d.price.toLocaleString()}円
+                    {d.salePrice.toLocaleString()}円
                   </div>
+                  <div className="px-1 text-right">
+                    {d.costPrice.toLocaleString()}円
+                  </div>
+                  {/* <div>{form.watch({`terms.${}`})}</div> */}
                 </div>
               ))}
             </div>

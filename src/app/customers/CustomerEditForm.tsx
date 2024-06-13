@@ -44,7 +44,8 @@ export default function CustomerEditForm({ customer, defaultValues }: Props) {
       productCode: "",
       productName: "",
       size: "",
-      price: 0,
+      salePrice: 0,
+      costPrice: 0,
       quantity: 0,
     });
   };
@@ -135,10 +136,17 @@ export default function CustomerEditForm({ customer, defaultValues }: Props) {
                   />
                 </div>
                 <div>
-                  {idx === 0 && <Label className="pb-3 block">価格</Label>}
+                  {idx === 0 && <Label className="pb-3 block">売価</Label>}
                   <Input
                     type="number"
-                    {...form.register(`products.${idx}.price`)}
+                    {...form.register(`products.${idx}.salePrice`)}
+                  />
+                </div>
+                <div>
+                  {idx === 0 && <Label className="pb-3 block">原価</Label>}
+                  <Input
+                    type="number"
+                    {...form.register(`products.${idx}.costPrice`)}
                   />
                 </div>
                 <RiDeleteBinLine

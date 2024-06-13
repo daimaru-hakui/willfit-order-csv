@@ -28,10 +28,15 @@ export default function CsvDownloadModal({ order }: Props) {
         return term.details
           .map((detail) => {
             return {
-              ...detail,
               orderDate,
               customerCode,
               customerName,
+              productCode: detail.productCode,
+              productName: detail.productName,
+              size: detail.size,
+              salePrice: detail.salePrice,
+              costPrice: detail.costPrice,
+              quantity: detail.quantity,
             };
           })
           .filter((detail) => detail.quantity !== 0);

@@ -53,6 +53,9 @@ export default function OrdersList() {
     return <Loading />;
   }
 
+  if (orders.length === 0)
+    return <div className="mt-12">現在、登録されているCSVはありません。</div>;
+
   return (
     <Table className="mt-3 w-[1200px]">
       <TableHeader>
@@ -74,10 +77,17 @@ export default function OrdersList() {
               {order.terms.at(0)?.orderDate} ~ {order.terms.at(-1)?.orderDate}
             </TableCell>
             <TableCell>
-              {format(new Date(order.createdAt?.toDate()), "yyyy年MM月dd日 HH時mm分")}
+              {format(
+                new Date(order.createdAt?.toDate()),
+                "yyyy年MM月dd日 HH時mm分"
+              )}
             </TableCell>
             <TableCell>
-              {order.updatedAt && format(new Date(order.updatedAt?.toDate()), "yyyy年MM月dd日 HH時mm分")}
+              {order.updatedAt &&
+                format(
+                  new Date(order.updatedAt?.toDate()),
+                  "yyyy年MM月dd日 HH時mm分"
+                )}
             </TableCell>
             <TableCell className="text-right">
               <div className="flex items-center gap-3">

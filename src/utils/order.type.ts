@@ -10,7 +10,8 @@ export type Order = {
       productCode: string;
       productName: string;
       size: string;
-      price: number;
+      salePrice: number;
+      costPrice: number;
       quantity: number;
     }[];
   }[];
@@ -29,7 +30,8 @@ export const CreateOrderSchema = z.object({
           productCode: z.string(),
           productName: z.string(),
           size: z.string(),
-          price: z.number(),
+          salePrice: z.number(),
+          costPrice: z.number(),
           quantity: z.number(),
         })
         .array(),

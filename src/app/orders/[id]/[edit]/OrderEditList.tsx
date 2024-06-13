@@ -13,7 +13,8 @@ export default function OrderEditList({ order }: { order: Order }) {
         <div className="grid grid-cols-[1fr_100px_70px] h-12 px-2 items-center bg-gray-100 rounded-md shadow-sm ">
           <div>商品名</div>
           <div>サイズ</div>
-          <div>価格</div>
+          <div>売価</div>
+          <div>原価</div>
         </div>
         {order?.terms.at(0)?.details.map((detail) => (
           <div
@@ -22,7 +23,8 @@ export default function OrderEditList({ order }: { order: Order }) {
           >
             <div>{detail.productName}</div>
             <div>{detail.size}</div>
-            <div className="text-right pr-2">{detail.price}円</div>
+            <div className="text-right pr-2">{detail.salePrice}円</div>
+            <div className="text-right pr-2">{detail.costPrice}円</div>
           </div>
         ))}
       </div>

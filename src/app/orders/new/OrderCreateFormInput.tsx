@@ -10,7 +10,8 @@ type Props = {
     productCode: string;
     productName: string;
     size: string;
-    price: number;
+    salePrice: number;
+    costPrice: number;
     quantity: number;
   };
   orderDate: string;
@@ -55,8 +56,15 @@ export default function OrderCreateFormInput({
       />
       <input
         type="hidden"
-        defaultValue={Number(product.price)}
-        {...form.register(`terms.${index}.details.${idx}.price`, {
+        defaultValue={Number(product.salePrice)}
+        {...form.register(`terms.${index}.details.${idx}.salePrice`, {
+          valueAsNumber: true,
+        })}
+      />
+      <input
+        type="hidden"
+        defaultValue={Number(product.costPrice)}
+        {...form.register(`terms.${index}.details.${idx}.costPrice`, {
           valueAsNumber: true,
         })}
       />
@@ -74,8 +82,7 @@ export default function OrderCreateFormInput({
             +e.target.value
           )
         }
-      //   ref={ref}
-      // onFocus={handleFocus}
+        onFocus={(e) => e.target.select()}
       />
     </div>
   );

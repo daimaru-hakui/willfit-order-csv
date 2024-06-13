@@ -10,7 +10,8 @@ export type Customer = {
     productCode: string;
     productName: string;
     size: string;
-    price: number;
+    salePrice: number;
+    costPrice: number;
     quantity: number;
   }[];
   createdAt: any;
@@ -20,13 +21,14 @@ export const CustomerCreateSchema = z.object({
   customerName: z.string().min(1, { message: "入力してください" }),
   customerCode: z.string(),
   excludedDays: z.number().array(),
-  closingDate: z.string().min(0,{message:"選択してください"}),
+  closingDate: z.string().min(0, { message: "選択してください" }),
   products: z
     .object({
       productCode: z.string(),
       productName: z.string(),
       size: z.string().optional(),
-      price: z.coerce.number(),
+      salePrice: z.coerce.number(),
+      costPrice: z.coerce.number(),
       quantity: z.number(),
     })
     .array(),
@@ -37,13 +39,14 @@ export const CustomerEditSchema = z.object({
   customerName: z.string().min(1, { message: "入力してください" }),
   customerCode: z.string(),
   excludedDays: z.number().array(),
-  closingDate: z.string().min(0,{message:"選択してください"}),
+  closingDate: z.string().min(0, { message: "選択してください" }),
   products: z
     .object({
       productCode: z.string(),
       productName: z.string(),
       size: z.string().optional(),
-      price: z.coerce.number(),
+      salePrice: z.coerce.number(),
+      costPrice: z.coerce.number(),
       quantity: z.number(),
     })
     .array(),
