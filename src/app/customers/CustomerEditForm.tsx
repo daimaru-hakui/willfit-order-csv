@@ -20,6 +20,7 @@ import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useStore } from "@/lib/store";
+import FormSelect from "@/components/form/FormSelect";
 
 type Props = {
   customer: Customer;
@@ -91,6 +92,12 @@ export default function CustomerEditForm({ customer, defaultValues }: Props) {
               name="customerName"
               type="text"
               label="顧客名"
+            />
+            <FormSelect
+              form={form}
+              name="closingDate"
+              label="締め日"
+              defaultValue={customer.closingDate}
             />
             <CheckboxInput form={form} defaultValue={customer?.excludedDays} />
           </div>

@@ -1,5 +1,5 @@
-'use client';
-import React, { useState } from "react";
+"use client";
+import React from "react";
 import MenuTitle from "./MenuTitle";
 import MenuList from "./MenuList";
 import { onAuthStateChanged } from "firebase/auth";
@@ -13,25 +13,25 @@ export default function Header() {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
-      if (pathname === '/auth/login') {
-        router.push('/');
+      if (pathname === "/auth/login") {
+        router.push("/orders");
+        return
       }
+      console.log("ログイン");
     } else {
       console.log("未ログイン");
-      router.push('/auth/login');
+      router.push("/auth/login");
     }
   });
 
-  if (pathname === '/auth/login') return (
-    <div></div>
-  );
+  if (pathname === "/auth/login") return <div></div>;
 
   return (
     <nav className="bg-muted flex justify-between items-center sticky top-0 p-3">
       <header className="flex items-center">
         <MenuTitle />
       </header>
-      <div className="hidden md:flex md:justify-between">
+      <div className="flex md:justify-between">
         <MenuList />
       </div>
     </nav>

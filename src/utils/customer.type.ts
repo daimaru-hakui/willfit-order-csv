@@ -5,6 +5,7 @@ export type Customer = {
   customerName: string;
   customerCode: string;
   excludedDays: number[];
+  closingDate: string;
   products: {
     productCode: string;
     productName: string;
@@ -19,13 +20,14 @@ export const CustomerCreateSchema = z.object({
   customerName: z.string().min(1, { message: "入力してください" }),
   customerCode: z.string(),
   excludedDays: z.number().array(),
+  closingDate: z.string().min(0,{message:"選択してください"}),
   products: z
     .object({
       productCode: z.string(),
       productName: z.string(),
       size: z.string().optional(),
       price: z.coerce.number(),
-      quantity: z.number()
+      quantity: z.number(),
     })
     .array(),
 });
@@ -35,13 +37,14 @@ export const CustomerEditSchema = z.object({
   customerName: z.string().min(1, { message: "入力してください" }),
   customerCode: z.string(),
   excludedDays: z.number().array(),
+  closingDate: z.string().min(0,{message:"選択してください"}),
   products: z
     .object({
       productCode: z.string(),
       productName: z.string(),
       size: z.string().optional(),
       price: z.coerce.number(),
-      quantity: z.number()
+      quantity: z.number(),
     })
     .array(),
 });

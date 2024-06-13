@@ -2,6 +2,7 @@
 import { SubmitRhkButton } from "@/components/form/Buttons";
 import CheckboxInput from "@/components/form/CheckboxInput";
 import { FormInput } from "@/components/form/FormInput";
+import FormSelect from "@/components/form/FormSelect";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -35,7 +36,7 @@ export function CustomerCreateModal() {
           productName: "",
           size: "",
           price: 0,
-          quantity: 0
+          quantity: 0,
         },
       ],
     },
@@ -52,7 +53,7 @@ export function CustomerCreateModal() {
       productName: "",
       size: "",
       price: 0,
-      quantity: 0
+      quantity: 0,
     });
   };
 
@@ -105,6 +106,11 @@ export function CustomerCreateModal() {
                   label="顧客名"
                 />
               </div>
+              <FormSelect
+                form={form}
+                name="closingDate"
+                label="締め日"
+              />
               <CheckboxInput form={form} />
               <div className="flex flex-col gap-3 mt-2">
                 {fields.map((item, idx) => (
@@ -113,11 +119,11 @@ export function CustomerCreateModal() {
                       <Input
                         type="hidden"
                         defaultValue={0}
-                        {...form.register(`products.${idx}.quantity`, { valueAsNumber: true })}
+                        {...form.register(`products.${idx}.quantity`, {
+                          valueAsNumber: true,
+                        })}
                       />
-                      {idx === 0 && (
-                        <Label className="pb-3 block">品番</Label>
-                      )}
+                      {idx === 0 && <Label className="pb-3 block">品番</Label>}
                       <Input
                         type="text"
                         autoComplete="off"

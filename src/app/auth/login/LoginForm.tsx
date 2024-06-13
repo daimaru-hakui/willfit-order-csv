@@ -38,15 +38,6 @@ export default function LoginForm() {
       });
   };
 
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     const uid = user.uid;
-  //     router.push("/");
-  //   } else {
-  //     console.log("未ログイン");
-  //   }
-  // });
-
   return (
     <Card className="w-[350px]">
       <CardHeader className="pb-3">

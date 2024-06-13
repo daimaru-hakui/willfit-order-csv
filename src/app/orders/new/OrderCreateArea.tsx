@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import OrderCreateForm from "./OrderCreateForm";
 import { Customer } from "@/utils/customer.type";
-import { addDays, differenceInCalendarDays, format, subDays } from "date-fns";
+import {
+  addDays,
+  differenceInCalendarDays,
+  format,
+  subDays,
+} from "date-fns";
 import { useStore } from "@/lib/store";
 
 type Props = {
@@ -14,7 +19,6 @@ export default function OrderCreateArea({ customer, terms, setTerms }: Props) {
   const [defaultValues, setDefaultValues] = useState<Customer>();
   const startDate = useStore((state) => state.startDate);
   const endDate = useStore((state) => state.endDate);
-  const customerId = useStore((state) => state.customerId);
 
   useEffect(() => {
     if (!customer) return;
@@ -43,10 +47,7 @@ export default function OrderCreateArea({ customer, terms, setTerms }: Props) {
 
   return (
     <div>
-      <OrderCreateForm
-        defaultValues={defaultValues}
-        terms={terms}
-      />
+      <OrderCreateForm defaultValues={defaultValues} terms={terms} />
     </div>
   );
 }

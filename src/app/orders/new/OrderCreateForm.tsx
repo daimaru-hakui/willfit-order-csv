@@ -19,10 +19,7 @@ type Props = {
   defaultValues: Customer;
 };
 
-export default function OrderCreateForm({
-  terms,
-  defaultValues,
-}: Props) {
+export default function OrderCreateForm({ terms, defaultValues }: Props) {
   const startDate = useStore((state) => state.startDate);
   const endDate = useStore((state) => state.endDate);
   const form = useForm<CreateOrder>({
@@ -34,8 +31,8 @@ export default function OrderCreateForm({
     values: {
       customerCode: defaultValues.customerCode,
       customerName: defaultValues.customerName,
-      terms: []
-    }
+      terms: [],
+    },
   });
 
   const onSubmit = async (data: CreateOrder) => {

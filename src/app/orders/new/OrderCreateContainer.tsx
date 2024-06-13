@@ -3,8 +3,6 @@ import { db } from "@/lib/firebase/client";
 import { Customer } from "@/utils/customer.type";
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useStore } from "@/lib/store";
-import { Button } from "@/components/ui/button";
 import OrderCreateArea from "./OrderCreateArea";
 import OrderCreateSearch from "./OrderCreateSearch";
 
@@ -14,7 +12,6 @@ type Props = {
 
 export default function OrderCreateContainer({ customerId }: Props) {
   const [customer, setCustomer] = useState<Customer>();
-  const resetDate = useStore((state) => state.resetDate);
   const [terms, setTerms] = useState<string[]>([]);
 
   useEffect(() => {
@@ -26,20 +23,13 @@ export default function OrderCreateContainer({ customerId }: Props) {
       },
       error: (e) => {
         console.log(e);
-      }
+      },
     });
   }, [customerId]);
 
-  const reset = () => {
-    resetDate();
-  };
-
   return (
-    <section className="w-full mx-auto">
-      <div className="flex gap-3 mb-6">
-        <OrderCreateSearch customer={customer} />
-        <Button onClick={reset}>期間リセット</Button>
-      </div>
+    <section className="w-full mx-auto flex flex-col gap-6">
+      <OrderCreateSearch customer={customer} />
 
       {customer && (
         <OrderCreateArea

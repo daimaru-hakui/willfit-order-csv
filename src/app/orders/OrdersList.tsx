@@ -83,7 +83,7 @@ export default function OrdersList() {
               <div className="flex items-center gap-3">
                 <CsvDownloadModal order={order} />
                 <Button variant="outline" asChild>
-                  <Link href={`/orders/${order.id}/edit`}>編集</Link>
+                  <Link href={`/orders/${order.id}/edit`}>詳細</Link>
                 </Button>
                 <OrderDeleteButton orderId={order.id} />
               </div>
