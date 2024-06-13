@@ -15,6 +15,7 @@ export type Order = {
       quantity: number;
     }[];
   }[];
+  isCompleted: boolean;
   createdAt: Date | any;
   updatedAt: Date | any;
 };

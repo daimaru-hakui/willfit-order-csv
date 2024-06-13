@@ -15,7 +15,7 @@ export default function Header() {
       const uid = user.uid;
       if (pathname === "/auth/login") {
         router.push("/orders");
-        return
+        return;
       }
       console.log("ログイン");
     } else {
@@ -27,7 +27,7 @@ export default function Header() {
   if (pathname === "/auth/login") return <div></div>;
 
   return (
-    <nav className="bg-muted flex justify-between items-center sticky top-0 p-3">
+    <nav className="bg-muted flex justify-between items-center sticky top-0 p-3 shadow-md">
       <header className="flex items-center">
         <MenuTitle />
       </header>

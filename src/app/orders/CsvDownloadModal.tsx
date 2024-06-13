@@ -7,8 +7,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { db } from "@/lib/firebase/client";
 import { Order } from "@/utils/order.type";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 
@@ -18,7 +20,7 @@ type Props = {
 
 export default function CsvDownloadModal({ order }: Props) {
   const [data, setData] = useState<any[]>([]);
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const handleDownloadCsv = () => {
     const { customerCode, customerName } = order;
@@ -43,7 +45,19 @@ export default function CsvDownloadModal({ order }: Props) {
       })
       .flat();
     setData(details);
+    handleIsCompleted();
     return;
+  };
+
+  const handleIsCompleted = async () => {
+    const orderRef = doc(db, "orders", order.id);
+    try {
+      await updateDoc(orderRef, {
+        isCompleted: true
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -72,9 +86,8 @@ export default function CsvDownloadModal({ order }: Props) {
           <Button type="button" className="w-full" asChild>
             <CSVLink
               data={data}
-              filename={`${order.customerName}_${
-                order.terms.at(0)?.orderDate
-              }_${order.terms.at(-1)?.orderDate}`}
+              filename={`${order.customerName}_${order.terms.at(0)?.orderDate
+                }_${order.terms.at(-1)?.orderDate}`}
               onClick={handleDownloadCsv}
             >
               Download
