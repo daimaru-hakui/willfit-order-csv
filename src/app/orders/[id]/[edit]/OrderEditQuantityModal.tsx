@@ -32,7 +32,7 @@ export default function OrderEditQuantityModal({
   return (
     <Dialog open={open} onOpenChange={() => handleCloseClick()}>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => setOpen(true)}>
+        <Button variant="outline" onClick={() => setOpen(true)} className="h-10 w-12 ">
           {quantity}
         </Button>
       </DialogTrigger>

@@ -23,6 +23,7 @@ import { format, setMonth } from "date-fns";
 import Loading from "../customers/loading";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function OrdersList() {
   const [orders, setOrders] = useState<Order[]>();
@@ -57,7 +58,7 @@ export default function OrdersList() {
     return <div className="mt-12">現在、登録されているCSVはありません。</div>;
 
   return (
-    <Table className="mt-3 w-[1200px]">
+    <Table className="mt-3 min-w-[1300px]">
       <TableHeader>
         <TableRow>
           <TableHead className="w-[150px]">顧客コード</TableHead>
@@ -70,7 +71,7 @@ export default function OrdersList() {
       </TableHeader>
       <TableBody>
         {orders.map((order) => (
-          <TableRow key={order.id}>
+          <TableRow key={order.id} className={cn(order.isCompleted && "bg-slate-200 hover:bg-slate-200")}>
             <TableCell>{order.customerCode}</TableCell>
             <TableCell>{order.customerName}</TableCell>
             <TableCell>
