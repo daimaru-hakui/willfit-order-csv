@@ -9,7 +9,14 @@ import {
 } from "@/components/ui/table";
 import { db } from "@/lib/firebase/client";
 import { Customer } from "@/utils/customer.type";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import CustomerEditModal from "./CustomerEditModal";
@@ -39,6 +46,17 @@ export default function CustomersList() {
   if (!customers) {
     return <Loading />;
   }
+
+  const handleDeleteCustomer = async (customerId: string) => {
+    const result = confirm("削除して宜しいでしょうか");
+    if (!result) return;
+    try {
+      const customerRef = doc(db, "customers", customerId);
+      await deleteDoc(customerRef);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Table className="mt-3">
@@ -71,6 +89,7 @@ export default function CustomersList() {
                   size={24}
                   color="red"
                   className="cursor-pointer"
+                  onClick={() => handleDeleteCustomer(customer.id)}
                 />
               </div>
             </TableCell>

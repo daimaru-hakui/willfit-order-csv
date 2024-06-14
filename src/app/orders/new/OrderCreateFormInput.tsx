@@ -17,6 +17,7 @@ type Props = {
   orderDate: string;
   index: number;
   idx: number;
+  setIsActive: (value: number|string) => void;
 };
 
 export default function OrderCreateFormInput({
@@ -25,13 +26,8 @@ export default function OrderCreateFormInput({
   product,
   index,
   idx,
+  setIsActive,
 }: Props) {
-  const ref = useRef<HTMLInputElement | null>(null);
-
-  const handleFocus = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-    ref?.current?.select();
-  };
-
   useEffect(() => {
     form.setValue(`terms.${index}.details.${idx}.quantity`, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,6 +79,13 @@ export default function OrderCreateFormInput({
           )
         }
         onFocus={(e) => e.target.select()}
+        onMouseEnter={(e) => {
+          console.log(idx);
+          setIsActive(idx);
+        }}
+        onMouseLeave={()=>{
+          setIsActive("")
+        }}
       />
     </div>
   );

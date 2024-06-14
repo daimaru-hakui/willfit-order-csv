@@ -116,6 +116,8 @@ export default function CustomerEditForm({ customer, defaultValues }: Props) {
                   {idx === 0 && <Label className="pb-3 block">品番</Label>}
                   <Input
                     type="text"
+                    className="w-[100px]"
+                    maxLength={8}
                     autoComplete="off"
                     {...form.register(`products.${idx}.productCode`)}
                   />
@@ -128,16 +130,17 @@ export default function CustomerEditForm({ customer, defaultValues }: Props) {
                     {...form.register(`products.${idx}.productName`)}
                   />
                 </div>
-                <div>
-                  {idx === 0 && <Label className="pb-3 block">サイズ</Label>}
-                  <Input
-                    type="text"
-                    {...form.register(`products.${idx}.size`)}
-                  />
-                </div>
+                {/* <div> */}
+                {/* {idx === 0 && <Label className="pb-3 block">サイズ</Label>} */}
+                <Input
+                  type="hidden"
+                  {...form.register(`products.${idx}.size`)}
+                />
+                {/* </div> */}
                 <div>
                   {idx === 0 && <Label className="pb-3 block">売価</Label>}
                   <Input
+                    className="w-[90px]"
                     type="number"
                     {...form.register(`products.${idx}.salePrice`)}
                   />
@@ -145,6 +148,7 @@ export default function CustomerEditForm({ customer, defaultValues }: Props) {
                 <div>
                   {idx === 0 && <Label className="pb-3 block">原価</Label>}
                   <Input
+                    className="w-[90px]"
                     type="number"
                     {...form.register(`products.${idx}.costPrice`)}
                   />

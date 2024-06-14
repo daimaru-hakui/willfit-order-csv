@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { Customer } from "@/utils/customer.type";
 import { CreateOrder } from "@/utils/order.type";
 import { UseFormReturn } from "react-hook-form";
@@ -5,26 +6,32 @@ import { UseFormReturn } from "react-hook-form";
 type Props = {
   defaultValues: Customer;
   form: UseFormReturn<CreateOrder, any, undefined>;
+  isActive: number | string;
 };
-export default function OrderCreateFormHeader({ defaultValues, form }: Props) {
+export default function OrderCreateFormHeader({
+  defaultValues,
+  form,
+  isActive,
+}: Props) {
   return (
     <>
-      <div className="w-full max-w-[500px] mt-1">
-        <div className="grid grid-cols-[1fr_100px_70px_70px] items-center h-[50px] px-2 bg-gray-300 rounded-md shadow-md">
-          <div className="text-left font-semibold min-w-[120px]">
-            商品名
-          </div>
-          <div className="text-left font-semibold">サイズ</div>
+      <div className="w-full max-w-[300px] mt-1">
+        <div className="grid grid-cols-[1fr_70px_70px] items-center h-[50px] px-2 bg-gray-300 rounded-md shadow-md">
+          <div className="text-left font-semibold min-w-[120px]">商品名</div>
+          {/* <div className="text-left font-semibold">サイズ</div> */}
           <div className="text-left font-semibold">売価</div>
           <div className="text-left font-semibold">原価</div>
         </div>
-        {defaultValues?.products?.map((d) => (
+        {defaultValues?.products?.map((d, index) => (
           <div
             key={d.productName}
-            className="grid grid-cols-[1fr_100px_70px_70px] items-center h-[40px] mt-2 px-2 bg-gray-100 rounded-md shadow-md"
+            className={cn(
+              "grid grid-cols-[1fr_70px_70px] items-center h-[40px] mt-2 px-2 bg-gray-100 rounded-md shadow-md duration-300",
+              isActive === index ? "bg-gray-200" : ""
+            )}
           >
             <div className="min-w-[120px]">{d.productName}</div>
-            <div className="px-1">{d.size}</div>
+            {/* <div className="px-1">{d.size}</div> */}
             <div className="px-1 text-right">
               {d.salePrice.toLocaleString()}円
             </div>
@@ -45,9 +52,14 @@ export default function OrderCreateFormHeader({ defaultValues, form }: Props) {
             className="grid grid-cols-1 items-center h-[40px] mt-2 px-2 bg-gray-100 rounded-md shadow-md"
           >
             <div className="text-right px-2">
-              {form.watch('terms')?.reduce((sum: number, term) => (
-                sum + (term.details && term.details[index]?.quantity || 0)
-              ), 0)}
+              {form
+                .watch("terms")
+                ?.reduce(
+                  (sum: number, term) =>
+                    sum +
+                    ((term.details && term.details[index]?.quantity) || 0),
+                  0
+                ).toLocaleString()}
             </div>
           </div>
         ))}

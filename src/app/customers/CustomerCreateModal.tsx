@@ -19,11 +19,14 @@ import { db } from "@/lib/firebase/client";
 import { CustomerCreate, CustomerCreateSchema } from "@/utils/customer.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { FiPlus } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 export function CustomerCreateModal() {
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const form = useForm<CustomerCreate>({
     resolver: zodResolver(CustomerCreateSchema),
     defaultValues: {
@@ -68,6 +71,7 @@ export function CustomerCreateModal() {
   };
 
   const createCustomer = async (data: CustomerCreate) => {
+    setLoading(true);
     const customerCol = collection(db, "customers");
     try {
       await addDoc(customerCol, {
@@ -79,11 +83,14 @@ export function CustomerCreateModal() {
       if (error instanceof Error) {
         console.log(error.message);
       }
+    } finally {
+      setLoading(false);
+      setOpen(!open)
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
         <Button variant="outline">追加</Button>
       </DialogTrigger>
@@ -124,6 +131,7 @@ export function CustomerCreateModal() {
                       {idx === 0 && <Label className="pb-3 block">品番</Label>}
                       <Input
                         type="text"
+                        maxLength={8}
                         autoComplete="off"
                         {...form.register(`products.${idx}.productCode`)}
                       />
@@ -138,12 +146,13 @@ export function CustomerCreateModal() {
                         {...form.register(`products.${idx}.productName`)}
                       />
                     </div>
-                    <div>
+                    <div className="hidden">
                       {idx === 0 && (
                         <Label className="pb-3 block">サイズ</Label>
                       )}
                       <Input
-                        type="text"
+                        type="hidden"
+                        defaultValue=""
                         {...form.register(`products.${idx}.size`)}
                       />
                     </div>
@@ -175,7 +184,7 @@ export function CustomerCreateModal() {
               </Button>
             </div>
             <DialogFooter>
-              <SubmitRhkButton text="登録" />
+              <SubmitRhkButton text="登録" isPending={loading} />
             </DialogFooter>
           </form>
         </Form>

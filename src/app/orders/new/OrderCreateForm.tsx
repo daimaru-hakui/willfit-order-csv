@@ -4,7 +4,7 @@ import { Form } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import OrderCreateFormInput from "./OrderCreateFormInput";
 import { useStore } from "@/lib/store";
@@ -14,6 +14,7 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
 import { Customer } from "@/utils/customer.type";
 import OrderCreateFormHeader from "./OrderCreateFormHeader";
+import { toast } from "@/components/ui/use-toast";
 
 type Props = {
   terms: string[];
@@ -21,6 +22,7 @@ type Props = {
 };
 
 export default function OrderCreateForm({ terms, defaultValues }: Props) {
+  const [isActive, setIsActive] = useState<number | string>("");
   const startDate = useStore((state) => state.startDate);
   const endDate = useStore((state) => state.endDate);
   const form = useForm<CreateOrder>({
@@ -49,11 +51,17 @@ export default function OrderCreateForm({ terms, defaultValues }: Props) {
     console.log(data);
     const result = confirm("登録して宜しいでしょうか");
     if (!result) return;
-    const ordersRef = collection(db, "orders");
-    await addDoc(ordersRef, {
-      ...data,
-      createdAt: serverTimestamp(),
-    });
+    try {
+      const ordersRef = collection(db, "orders");
+      await addDoc(ordersRef, {
+        ...data,
+        createdAt: serverTimestamp(),
+      });
+      toast({
+        title: "登録しました",
+        description: new Date().toString(),
+      });
+    } catch (error) {}
   };
 
   const reset = () => {
@@ -75,7 +83,11 @@ export default function OrderCreateForm({ terms, defaultValues }: Props) {
           <input type="hidden" {...form.register(`customerCode`)} />
           <input type="hidden" {...form.register(`customerName`)} />
           <div className="flex gap-3">
-            <OrderCreateFormHeader defaultValues={defaultValues} form={form} />
+            <OrderCreateFormHeader
+              defaultValues={defaultValues}
+              form={form}
+              isActive={isActive}
+            />
 
             <div className="overflow-auto p-1 pl-0 pb-3">
               <div className="flex">
@@ -107,6 +119,7 @@ export default function OrderCreateForm({ terms, defaultValues }: Props) {
                         orderDate={day}
                         index={index}
                         idx={idx}
+                        setIsActive={setIsActive}
                       />
                     ))}
                   </div>
