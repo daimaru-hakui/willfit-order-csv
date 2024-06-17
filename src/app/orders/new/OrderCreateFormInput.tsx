@@ -1,6 +1,7 @@
+import { cn } from "@/lib/utils";
 import { Customer } from "@/utils/customer.type";
 import { CreateOrder } from "@/utils/order.type";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 
 type Props = {
@@ -17,7 +18,7 @@ type Props = {
   orderDate: string;
   index: number;
   idx: number;
-  setIsActive: (value: number|string) => void;
+  setIsActive: (value: number | string) => void;
 };
 
 export default function OrderCreateFormInput({
@@ -28,6 +29,7 @@ export default function OrderCreateFormInput({
   idx,
   setIsActive,
 }: Props) {
+  
   useEffect(() => {
     form.setValue(`terms.${index}.details.${idx}.quantity`, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,7 +70,9 @@ export default function OrderCreateFormInput({
       <input
         type="number"
         defaultValue={0}
-        className="w-[75px] h-[40px] mt-2 block p-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+        className={cn(
+          "w-[75px] h-[30px] mt-2 block p-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+        )}
         {...form.register(`terms.${index}.details.${idx}.quantity`, {
           valueAsNumber: true,
         })}
@@ -80,11 +84,10 @@ export default function OrderCreateFormInput({
         }
         onFocus={(e) => e.target.select()}
         onMouseEnter={(e) => {
-          console.log(idx);
           setIsActive(idx);
         }}
-        onMouseLeave={()=>{
-          setIsActive("")
+        onMouseLeave={() => {
+          setIsActive("");
         }}
       />
     </div>

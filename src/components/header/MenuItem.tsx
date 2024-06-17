@@ -14,16 +14,15 @@ export default function MenuItem({ children, href, setOpen }: Props) {
   const isActive = href === pathname;
   return (
     <li onClick={() => setOpen && setOpen(false)}>
-      <Link
-        href={href}
-        className={cn(
-          "block py-1 px-3 dark:hover:bg-zinc-700 text-muted-foreground hover:text-foreground hover:border-primary border-b-2",
-          isActive &&
-            "text-primary border-primary"
-        )}
-      >
-        {children}
-      </Link>
+        <Link
+          href={href}
+          className={cn(
+            "block py-1 px-3 dark:hover:bg-zinc-700 text-muted-foreground hover:text-foreground hover:border-primary border-b-2",
+            isActive && "text-primary border-primary"
+          )}
+        >
+          {children}
+        </Link>
     </li>
   );
 }

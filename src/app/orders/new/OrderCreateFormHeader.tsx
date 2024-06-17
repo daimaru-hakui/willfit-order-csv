@@ -26,7 +26,7 @@ export default function OrderCreateFormHeader({
           <div
             key={d.productName}
             className={cn(
-              "grid grid-cols-[1fr_70px_70px] items-center h-[40px] mt-2 px-2 bg-gray-100 rounded-md shadow-md duration-300",
+              "grid grid-cols-[1fr_70px_70px] items-center h-[30px] mt-2 px-2 bg-gray-100 rounded-md shadow-md duration-300",
               isActive === index ? "bg-gray-200" : ""
             )}
           >
@@ -49,7 +49,7 @@ export default function OrderCreateFormHeader({
         {defaultValues?.products?.map((d, index) => (
           <div
             key={d.productName}
-            className="grid grid-cols-1 items-center h-[40px] mt-2 px-2 bg-gray-100 rounded-md shadow-md"
+            className="grid grid-cols-1 items-center h-[30px] mt-2 px-2 bg-gray-100 rounded-md shadow-md"
           >
             <div className="text-right px-2">
               {form

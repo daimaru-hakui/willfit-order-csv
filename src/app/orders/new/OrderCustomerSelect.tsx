@@ -23,7 +23,7 @@ export default function OrderCustomerSelect({ customers }: Props) {
       setCustomerId(e);
       router.push(`/orders/new?search=${e}`);
     }} >
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-auto min-w-[180px]">
         <SelectValue placeholder="顧客選択" />
       </SelectTrigger>
       <SelectContent>
