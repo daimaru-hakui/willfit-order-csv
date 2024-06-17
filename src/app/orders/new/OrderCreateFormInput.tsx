@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Customer } from "@/utils/customer.type";
 import { CreateOrder } from "@/utils/order.type";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 
 type Props = {
@@ -29,7 +29,7 @@ export default function OrderCreateFormInput({
   idx,
   setIsActive,
 }: Props) {
-  
+  const ref = useRef<any | null>(null);
   useEffect(() => {
     form.setValue(`terms.${index}.details.${idx}.quantity`, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,6 +68,7 @@ export default function OrderCreateFormInput({
       />
 
       <input
+        id={String(`${index}-${idx}`)}
         type="number"
         defaultValue={0}
         className={cn(

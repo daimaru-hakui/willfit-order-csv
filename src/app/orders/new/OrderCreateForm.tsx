@@ -39,7 +39,6 @@ export default function OrderCreateForm({ terms, defaultValues }: Props) {
   });
 
   const onSubmit = async (data: CreateOrder) => {
-    console.log(data);
     await handleCreateOrder(data);
   };
 
@@ -73,6 +72,30 @@ export default function OrderCreateForm({ terms, defaultValues }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate, defaultValues]);
 
+  const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement> | any) => {
+    const key = e.code;
+
+    if (key === "ArrowUp") {
+      console.log("up");
+    }
+
+    if (key === "ArrowDown") {
+      console.log("down");
+    }
+
+    if (key === "ArrowLeft") {
+      const index = e.target.getAttribute("id").split("-")[0];
+      const idx = e.target.getAttribute("id").split("-")[1];
+      document.getElementById(`${Number(index) - 1}-${idx}`)?.focus();
+    }
+
+    if (key === "ArrowRight") {
+      const index = e.target.getAttribute("id").split("-")[0];
+      const idx = e.target.getAttribute("id").split("-")[1];
+      document.getElementById(`${Number(index) + 1}-${idx}`)?.focus();
+    }
+  };
+
   return (
     <>
       <Form {...form}>
@@ -90,7 +113,7 @@ export default function OrderCreateForm({ terms, defaultValues }: Props) {
             />
 
             <div className="overflow-auto p-1 pl-0 pb-3">
-              <div className="flex">
+              <div className="flex" onKeyDown={(e) => keyDownHandler(e)}>
                 {terms?.map((day, index) => (
                   <div key={day} className="px-[1px]">
                     <input
