@@ -77,13 +77,17 @@ export default function OrderCreateFormInput({
         {...form.register(`terms.${index}.details.${idx}.quantity`, {
           valueAsNumber: true,
         })}
-        onChange={(e) =>
+
+        onChange={(e) => {
           form.setValue(
             `terms.${index}.details.${idx}.quantity`,
             +e.target.value
-          )
+          );
+        }}
+        onFocus={(e) => { 
+          e.target.select()
+          setIsActive(idx);}
         }
-        onFocus={(e) => e.target.select()}
         onMouseEnter={(e) => {
           setIsActive(idx);
         }}

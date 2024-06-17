@@ -74,22 +74,25 @@ export default function OrderCreateForm({ terms, defaultValues }: Props) {
 
   const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const key = e.code;
-    // if (key === "ArrowUp") {
-    //   const { index, idx } = searchIndexIdx(e);
-    //   document.getElementById(`${index}-${Number(idx) - 1}`)?.focus();
-    // }
 
-    // if (key === "ArrowDown") {
-    //   const { index, idx } = searchIndexIdx(e);
-    //   document.getElementById(`${index}-${Number(idx) + 1}`)?.focus();
-    // }
+    if (key === "ArrowUp") {
+      e.preventDefault();
+      const { index, idx } = searchIndexIdx(e);
+      document.getElementById(`${index}-${Number(idx) - 1}`)?.focus();
+    }
 
-    if (key === "ArrowLeft" || key === "KeyA") {
+    if (key === "ArrowDown") {
+      e.preventDefault();
+      const { index, idx } = searchIndexIdx(e);
+      document.getElementById(`${index}-${Number(idx) + 1}`)?.focus();
+    }
+
+    if (key === "ArrowLeft") {
       const { index, idx } = searchIndexIdx(e);
       document.getElementById(`${Number(index) - 1}-${idx}`)?.focus();
     }
 
-    if (key === "ArrowRight" || key === "KeyD") {
+    if (key === "ArrowRight") {
       const { index, idx } = searchIndexIdx(e);
       document.getElementById(`${Number(index) + 1}-${idx}`)?.focus();
     }
