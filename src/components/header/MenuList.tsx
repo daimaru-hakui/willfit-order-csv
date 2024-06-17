@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 import MenuItem from "./MenuItem";
-import { Button } from "../ui/button";
-import { auth } from "@/lib/firebase/client";
 
 export default function MenuList({
   setOpen,
@@ -17,9 +15,7 @@ export default function MenuList({
       >
         <MenuItem href="/customers">顧客一覧</MenuItem>
         <MenuItem href="/orders">CSV一覧</MenuItem>
-        <Button variant="outline" onClick={() => auth.signOut()}>
-          ログアウト
-        </Button>
+        <MenuItem href="/orders/new">新規CSV作成</MenuItem>
       </ul>
     </>
   );

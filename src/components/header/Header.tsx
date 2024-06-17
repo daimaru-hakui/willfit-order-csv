@@ -5,6 +5,7 @@ import MenuList from "./MenuList";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { usePathname, useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 export default function Header() {
   const pathname = usePathname();
@@ -27,12 +28,13 @@ export default function Header() {
   if (pathname === "/auth/login") return <div></div>;
 
   return (
-    <nav className="bg-muted flex justify-between items-center sticky top-0 p-3 shadow-md">
-      <header className="flex items-center">
-        <MenuTitle />
-      </header>
+    <nav className="bg-muted flex justify-center items-center sticky top-0 p-3 shadow-md">
+      <header className="flex items-center">{/* <MenuTitle /> */}</header>
       <div className="flex md:justify-between">
         <MenuList />
+        <Button className="ml-3" variant="outline" onClick={() => auth.signOut()}>
+          ログアウト
+        </Button>
       </div>
     </nav>
   );

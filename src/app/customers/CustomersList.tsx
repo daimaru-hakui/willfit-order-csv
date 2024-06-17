@@ -63,8 +63,7 @@ export default function CustomersList() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[150px]">顧客コード</TableHead>
-          <TableHead className="w-[250px]">顧客名</TableHead>
-          <TableHead className="w-[100px]">期間</TableHead>
+          <TableHead className="w-auto min-w-[300px]">顧客名</TableHead>
           <TableHead className="w-[100px]">actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -77,7 +76,6 @@ export default function CustomersList() {
             <TableCell className="font-medium">
               {customer.customerName}
             </TableCell>
-            <TableCell className="font-medium"></TableCell>
             <TableCell className="text-right">
               <div className="flex items-center gap-3">
                 <CustomerEditModal

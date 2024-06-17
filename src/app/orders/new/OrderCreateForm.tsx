@@ -72,28 +72,36 @@ export default function OrderCreateForm({ terms, defaultValues }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startDate, endDate, defaultValues]);
 
-  const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement> | any) => {
+  const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
     const key = e.code;
+    // if (key === "ArrowUp") {
+    //   const { index, idx } = searchIndexIdx(e);
+    //   document.getElementById(`${index}-${Number(idx) - 1}`)?.focus();
+    // }
 
-    if (key === "ArrowUp") {
-      console.log("up");
-    }
+    // if (key === "ArrowDown") {
+    //   const { index, idx } = searchIndexIdx(e);
+    //   document.getElementById(`${index}-${Number(idx) + 1}`)?.focus();
+    // }
 
-    if (key === "ArrowDown") {
-      console.log("down");
-    }
-
-    if (key === "ArrowLeft") {
-      const index = e.target.getAttribute("id").split("-")[0];
-      const idx = e.target.getAttribute("id").split("-")[1];
+    if (key === "ArrowLeft" || key === "KeyA") {
+      const { index, idx } = searchIndexIdx(e);
       document.getElementById(`${Number(index) - 1}-${idx}`)?.focus();
     }
 
-    if (key === "ArrowRight") {
-      const index = e.target.getAttribute("id").split("-")[0];
-      const idx = e.target.getAttribute("id").split("-")[1];
+    if (key === "ArrowRight" || key === "KeyD") {
+      const { index, idx } = searchIndexIdx(e);
       document.getElementById(`${Number(index) + 1}-${idx}`)?.focus();
     }
+  };
+
+  const searchIndexIdx = (e: any) => {
+    const index = e.target.getAttribute("id").split("-")[0];
+    const idx = e.target.getAttribute("id").split("-")[1];
+    return {
+      index,
+      idx,
+    };
   };
 
   return (
