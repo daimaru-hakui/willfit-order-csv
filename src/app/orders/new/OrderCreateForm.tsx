@@ -88,11 +88,13 @@ export default function OrderCreateForm({ terms, defaultValues }: Props) {
     }
 
     if (key === "ArrowLeft") {
+      e.preventDefault();
       const { index, idx } = searchIndexIdx(e);
       document.getElementById(`${Number(index) - 1}-${idx}`)?.focus();
     }
 
     if (key === "ArrowRight") {
+      e.preventDefault();
       const { index, idx } = searchIndexIdx(e);
       document.getElementById(`${Number(index) + 1}-${idx}`)?.focus();
     }
